@@ -20,14 +20,24 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: process.env.CLIENT_URL, credentials: true }
+  cors: { origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }
 });
 setupSockets(io);
 
 // attach io to req
 app.use((req, _res, next) => { req.io = io; next(); });
 
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+const ORIGIN = process.env.CLIENT_URL || 'http://localhost:5173';
+const corsOptions = {
+  origin: ORIGIN,
+  credentials: true,
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 
