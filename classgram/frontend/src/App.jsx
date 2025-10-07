@@ -36,8 +36,22 @@ function App() {
     }
   }, [socket])
 
-  if (!getToken() && page !== 'signup') return <Signup onSwitch={() => setPage('login')} onSignedIn={(u, t)=>{ setMe(u); setToken(t); setPage('home') }} />
-  if (!getToken() && page === 'signup') return <Signup onSwitch={() => setPage('login')} onSignedIn={(u, t)=>{ setMe(u); setToken(t); setPage('home') }} />
+  if (!getToken() && page === 'login') {
+    return (
+      <Login
+        onSwitch={() => setPage('signup')}
+        onSignedIn={(u, t)=>{ setMe(u); setToken(t); setPage('home') }}
+      />
+    )
+  }
+  if (!getToken() && page === 'signup') {
+    return (
+      <Signup
+        onSwitch={() => setPage('login')}
+        onSignedIn={(u, t)=>{ setMe(u); setToken(t); setPage('home') }}
+      />
+    )
+  }
 
   return (
     <div>
