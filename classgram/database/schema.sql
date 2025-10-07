@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS users (
   username VARCHAR(50) UNIQUE NOT NULL,
   email VARCHAR(100) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
-  profile_pic VARCHAR(255) DEFAULT '',
-  bio TEXT,
+  profile_pic VARCHAR(255) DEFAULT NULL,
+  bio TEXT DEFAULT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS comments (
   comment_id INT PRIMARY KEY AUTO_INCREMENT,
   post_id INT NOT NULL,
   user_id INT NOT NULL,
-  comment_text TEXT,
+  comment_text TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS messages (
   message_id INT PRIMARY KEY AUTO_INCREMENT,
   sender_id INT NOT NULL,
   receiver_id INT NOT NULL,
-  message_text TEXT,
+  message_text TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (sender_id) REFERENCES users(user_id) ON DELETE CASCADE,
   FOREIGN KEY (receiver_id) REFERENCES users(user_id) ON DELETE CASCADE

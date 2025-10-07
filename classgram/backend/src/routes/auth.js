@@ -20,7 +20,9 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign({ user_id: result.insertId }, process.env.JWT_SECRET, { expiresIn: '7d' });
     res.json({ token, user: { user_id: result.insertId, username, email, profile_pic: '', bio: '' } });
   } catch (e) {
-    res.status(500).json({ error: 'Server error' });
+    console.error('Auth register error:', e);
+    const msg = process.env.NODE_ENV === 'development' ? (e.message || 'Server error') : 'Server error';
+    res.status(500).json({ error: msg });
   }
 });
 
@@ -36,7 +38,9 @@ router.post('/login', async (req, res) => {
     delete user.password;
     res.json({ token, user });
   } catch (e) {
-    res.status(500).json({ error: 'Server error' });
+    console.error('Auth login error:', e);
+    const msg = process.env.NODE_ENV === 'development' ? (e.message || 'Server error') : 'Server error';
+    res.status(500).json({ error: msg });
   }
 });
 
