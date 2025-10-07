@@ -14,7 +14,7 @@ export default function Login({ onSwitch, onSignedIn }){
       setToken(token)
       onSignedIn(user, token)
     } catch (err) {
-      setError('Login failed')
+      setError(err.message || 'Login failed')
     }
   }
 

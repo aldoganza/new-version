@@ -15,7 +15,19 @@ export async function api(path, opts={}){
   const token = getToken()
   if (token) headers['Authorization'] = `Bearer ${token}`
   const res = await fetch(BASE + path, { ...opts, headers })
-  if (!res.ok) throw new Error(await res.text())
+  if (!res.ok) {
+    let msg = 'Request failed'
+    const ct = res.headers.get('content-type') || ''
+    if (ct.includes('application/json')) {
+      try {
+        const data = await res.json()
+        msg = data.error || data.message || JSON.stringify(data)
+      } catch {}
+    } else {
+      try { msg = await res.text() } catch {}
+    }
+    throw new Error(msg)
+  }
   if (res.status === 204) return null
   return res.json()
 }
