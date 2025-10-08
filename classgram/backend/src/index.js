@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import http from 'http';
 import { Server } from 'socket.io';
+import { pool } from './config/db.js';
 
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
@@ -43,6 +44,17 @@ app.use(cookieParser());
 
 app.get('/', (_req, res) => res.send('ClassGram API running'));
 
+// Health check: verifies DB connectivity
+app.get('/api/health', async (_req, res) => {
+  try {
+    const [[row]] = await pool.query('SELECT 1 AS ok');
+    res.json({ ok: true, db: row.ok === 1 });
+  } catch (e) {
+    console.error('Health check DB error:', e);
+    res.status(500).json({ ok: false, error: 'DB connection failed', details: process.env.NODE_ENV === 'development' ? e.message : undefined });
+  }
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
@@ -53,4 +65,12 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/notifications', notificationRoutes);
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => console.log(`API listening on http://localhost:${PORT}`));
+server.listen(PORT, async () => {
+  console.log(`API listening on http://localhost:${PORT}`);
+  try {
+    await pool.query('SELECT 1');
+    console.log('DB connection OK');
+  } catch (e) {
+    console.error('DB connection FAILED:', e.message);
+  }
+});
