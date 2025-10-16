@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { api } from "../api";
 import "../styles/components.css";
+import "../styles/themes.css";
 
 const Settings = ({ me }) => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
   
   // Profile state
   const [username, setUsername] = useState(me?.username || "");
