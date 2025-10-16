@@ -65,12 +65,38 @@ const Settings = ({ me }) => {
     }
   };
 
+  useEffect(() => {
+    // Apply theme on component mount and theme changes
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+  };
+
   return (
     <div className="container">
       <h1>Settings</h1>
       
       {message && <div className="alert success">{message}</div>}
       {error && <div className="alert error">{error}</div>}
+
+      <div className="settings-section">
+        <h2>Theme Preferences</h2>
+        <div className="theme-toggle">
+          <label>Dark Mode</label>
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={theme === 'dark'}
+              onChange={toggleTheme}
+            />
+            <span className="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
 
       <div className="settings-section">
         <h2>Edit Profile</h2>
