@@ -1,0 +1,90 @@
+/* Dark Theme (default) */
+:root[data-theme="dark"] {
+  --bg: #0b1020;
+  --bg2: #121a33;
+  --text: #e8ebff;
+  --muted: #a8b3d9;
+  --primary: #6a5acd;
+  --secondary: #3aa9ff;
+  --neon: #19ffa6;
+  --neon-pink: #ff4fd8;
+  --card: #12172b;
+  --input-bg: #0f1530;
+  --border-color: #2a3466;
+}
+
+/* Light Theme */
+:root[data-theme="light"] {
+  --bg: #f0f2f5;
+  --bg2: #ffffff;
+  --text: #1a1a1a;
+  --muted: #666666;
+  --primary: #6a5acd;
+  --secondary: #3aa9ff;
+  --neon: #00b377;
+  --neon-pink: #e41c97;
+  --card: #ffffff;
+  --input-bg: #ffffff;
+  --border-color: #e0e0e0;
+}
+
+/* Theme Toggle Styles */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  background: var(--card);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.theme-toggle label {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--muted);
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: var(--primary);
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
