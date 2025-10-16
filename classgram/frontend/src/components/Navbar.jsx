@@ -10,6 +10,7 @@ export default function Navbar({ onNavigate, me, notifications, onLogout }){
         <button onClick={()=>onNavigate('trending')}>Trending</button>
         <button onClick={()=>onNavigate('chat')}>Chat</button>
         <button onClick={()=>onNavigate('profile')}>Profile</button>
+        <button onClick={()=>onNavigate('settings')}>Settings</button>
       </div>
       <div className="right">
         <div className="notif">🔔 {notifications?.length || 0}</div>

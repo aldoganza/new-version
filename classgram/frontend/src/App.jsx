@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Chat from './pages/Chat'
 import Trending from './pages/Trending'
+import Settings from './pages/Settings'
 import { api, getToken, setToken, clearToken } from './api'
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
       {page === 'profile' && <Profile me={me} />}
       {page === 'chat' && <Chat me={me} socket={socket} />}
       {page === 'trending' && <Trending />}
+      {page === 'settings' && <Settings me={me} />}
     </div>
   )
 }
