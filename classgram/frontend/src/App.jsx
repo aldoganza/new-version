@@ -16,6 +16,12 @@ function App() {
   const [socket, setSocket] = useState(null)
   const [notifications, setNotifications] = useState([])
 
+  // Initialize theme from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
   useEffect(() => {
     const t = getToken()
     if (t) {
