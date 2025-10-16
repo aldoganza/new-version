@@ -1,4 +1,4 @@
-const BASE = 'http://localhost:5000'
+const BASE = 'http://localhost:5001'
 
 export function getToken(){
   return localStorage.getItem('cg_token')
