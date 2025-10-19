@@ -51,7 +51,7 @@ app.get('/api/health', async (_req, res) => {
     res.json({ ok: true, db: row.ok === 1 });
   } catch (e) {
     console.error('Health check DB error:', e);
-    res.status(500).json({ ok: false, error: 'DB connection failed', details: process.env.NODE_ENV === 'development' ? e.message : undefined });
+    res.status(500).json({ ok: false, error: 'DB connection failed', details: process.env.NODE_ENV === 'development' ? (e && e.message) : undefined });
   }
 });
 
@@ -71,7 +71,7 @@ server.listen(PORT, async () => {
     await pool.query('SELECT 1');
     console.log('DB connection OK');
   } catch (e) {
-    console.error('DB connection FAILED:', e.message);
+    console.error('DB connection FAILED:', e);
   }
 });
 
