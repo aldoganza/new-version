@@ -74,3 +74,11 @@ server.listen(PORT, async () => {
     console.error('DB connection FAILED:', e.message);
   }
 });
+
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION', err && err.stack ? err.stack : err);
+  process.exit(1);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('UNHANDLED REJECTION', reason);
+});
